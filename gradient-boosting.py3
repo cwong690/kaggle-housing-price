@@ -116,6 +116,15 @@ test[col_w_null].count()
 
 
 # From the plots, we can see there are many ordinal columns that can be converted to numbers
+from sklearn import preprocessing
+enc = preprocessing.LabelEncoder()
 
+# Binary columns: Utilities, CentralAir, PavedDrive, PoolArea
+train['Utilities'] = enc.fit_transform(train['Utilities'])
+train['CentralAir'] = enc.fit_transform(train['CentralAir'])
+
+# PavedDrive and PoolArea has values that can be combined
+train['PavedDrive'].replace(['N', 'Y', 'P'], [0,1,1], inplace=True)
+train['PavedDrive'].value_counts()
 
 
