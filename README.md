@@ -1,9 +1,8 @@
 <h1> Housing Price Predictions: More than meets the eye </h1>
 
-When home owners begin their searches for their perfect dream home, they may have some ideas and features in mind already.  
-Little do they know, there are actually more qualities they notice and care about when they begin touring houses.  
+When home owners begin their searches for their perfect dream home, they may have some ideas and features in mind already.  Little do they know, there are actually more qualities they notice and care about when they begin touring houses.  
 
-*Here's a brief version of what you'll find in the data description file.*
+<h2> *Here's a brief version of what you'll find in the data description file.* </h2>
 
 **SalePrice**: the property's sale price in dollars. This is the target variable to predict.  
 
