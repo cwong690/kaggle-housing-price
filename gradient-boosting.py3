@@ -32,9 +32,43 @@ train.describe()
 test.info()
 test.describe()
 
-# Looking at the unique value counts of each column. There are definitely imbalances and possible outliers.
+# Looking at the unique value counts of each column. There are definitely imbalances within each categories.
 for col in train.columns[1:]:
     print(col, train[col].value_counts(dropna=False))
     
 for col in test.columns[1:]:
     print(col, test[col].value_counts(dropna=False))
+
+# Drop duplicates in case there are any
+train.drop_duplicates()
+print(train.shape)
+
+test.drop_duplicates()
+print(test.shape)
+
+# Plotting graphs
+for x in num_cols:
+    sns.lmplot(x, 'SalePrice', train)
+    plt.show()
+    
+for x in cat_cols:
+    sns.countplot(x=x, data=train)
+    plt.show()
+
+for col in cat_cols:
+    sns.boxplot(col, 'SalePrice', data=train)
+    plt.show()    
+
+# Correlation graph
+train.corr().style.background_gradient(cmap='coolwarm')
+
+# Columns with correlation higher than 0.4
+train_corr = train.corr()
+high_corr = train_corr.index[abs(train_corr['SalePrice']) > 0.4]
+plt.figure(figsize=(10,10))
+sns.heatmap(train[high_corr].corr(), annot=True)
+
+# From the plots, we can see there are many ordinal columns that can be converted to numbers
+
+
+
