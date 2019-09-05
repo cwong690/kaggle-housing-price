@@ -62,11 +62,58 @@ for col in cat_cols:
 # Correlation graph
 train.corr().style.background_gradient(cmap='coolwarm')
 
+test.corr().style.background_gradient(cmap='coolwarm')
+
 # Columns with correlation higher than 0.4
 train_corr = train.corr()
 high_corr = train_corr.index[abs(train_corr['SalePrice']) > 0.4]
 plt.figure(figsize=(10,10))
 sns.heatmap(train[high_corr].corr(), annot=True)
+
+test_corr = test.corr()
+high_corr = test_corr.index[abs(test_corr['SalePrice']) > 0.4]
+plt.figure(figsize=(10,10))
+sns.heatmap(test[high_corr].corr(), annot=True)
+
+# Check for missing values
+print(train.shape)
+sns.heatmap(train.isnull(), cmap='viridis')
+print(test.shape)
+sns.heatmap(test.isnull(), cmap='viridis')
+
+train_null = train.isnull().sum()
+train_null[train_null > 0].sort_values(ascending=False)
+test_null = test.isnull().sum()
+test_null[test_null > 0].sort_values(ascending=False)
+
+perc_null = (train_null.sort_values(ascending=False) / 1460) * 100
+perc_null[perc_null > 50.0]
+test_perc_null = (test_null.sort_values(ascending=False) / 1460) * 100
+test_perc_null[test_perc_null > 50.0]
+
+col_w_null = train_null[train_null > 0].keys()
+test_col_w_null = test_null[test_null > 0].keys()
+
+# Filling in missing data with appropriate value
+train[train['MSSubClass'] == 80]['Electrical']
+train['Electrical'].fillna(value='SBrKr', inplace=True)
+
+for col in col_w_null:
+    if train[col].dtypes == float:
+        train[col].fillna(value=0, inplace=True)
+for col in col_w_null:
+    if train[col].dtypes == object:
+        train[col].fillna(value='None', inplace=True)
+train[col_w_null].count()
+
+for col in col_w_null:
+    if test[col].dtypes == float:
+        test[col].fillna(value=0, inplace=True)
+for col in col_w_null:
+    if test[col].dtypes == object:
+        test[col].fillna(value='None', inplace=True)
+test[col_w_null].count()
+
 
 # From the plots, we can see there are many ordinal columns that can be converted to numbers
 
