@@ -139,7 +139,7 @@ train['PavedDrive'].value_counts()
 # Years
 train['HomeAge'] = train['YrSold'] - train['YearBuilt']
 train.head()
-# train.drop('YearBuilt', 'YrSold')
+# train.drop('YearBuilt', 'YrSold', 'YearRemodAdd')
 train['GarageAge'] = train['YrSold'] - train['GarageYrBlt']
 train.head()
 # train.drop('GarageYrBlt')
